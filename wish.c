@@ -85,17 +85,11 @@ int findRedir(char *input[])
         cmp = strdup(input[i]);
         if (ret == -1)
         {
-            if (strcmp(cmp, ">") == 0)
-            {
-                ret = i;
-            }
+            if (strcmp(cmp, ">") == 0) ret = i;
         }
         else
         {
-            if (strcmp(cmp, ">") == 0)
-            {
-                ret = -2;
-            }
+            if (strcmp(cmp, ">") == 0) ret = -2;
         }
     }
     return ret;
