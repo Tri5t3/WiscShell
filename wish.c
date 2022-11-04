@@ -32,11 +32,6 @@ char **lineHandler(char *line, char *ret[])
         index++;
     }
 
-    // for (int i = 0; strcmp(input[i], "") != 0; i++)
-    // {
-    //     printf("Input[%d]: %s\n", i, input[i]);
-    // }
-    // redir bad input ls>output
     for (int i = 0; i < index; i++)
     {
         if (strlen(input[i]) > 1)
@@ -48,12 +43,7 @@ char **lineHandler(char *line, char *ret[])
                     strcpy(input[i + j + 2], input[i + j]);
                 }
                 strcpy(input[i + 1], ">");
-                // test
-                //  for (int i = 0; i < 6; i++)
-                //  {
-                //      printf("Input[%d]: %s\n", i, input[i]);
-                //  }
-
+                
                 char badInput[strSize];
                 char *str;
                 strcpy(badInput, input[i]);
@@ -63,12 +53,6 @@ char **lineHandler(char *line, char *ret[])
             }
         }
     }
-
-    // test
-    //  for (int i = 0; strcmp(input[i], "") != 0; i++)
-    //  {
-    //      printf("Input[%d]: %s\n", i, input[i]);
-    //  }
 
     int strLen = 0;
     for (int i = 0; strcmp(input[i], "") != 0; i++)
@@ -159,7 +143,6 @@ void do_Fork(char *input[], int pathCount, char *_1_d_path[])
         else
         {
             int redir = findRedir(input);
-            // printf("Redir: %d\n", redir);
             if (redir == -2)
             {
                 char error_message[30] = "An error has occurred\n";
@@ -174,7 +157,6 @@ void do_Fork(char *input[], int pathCount, char *_1_d_path[])
             }
             if (redir > 0 && redir != len - 2)
             {
-                // printf("Redir: %d\n", redir);
                 char error_message[30] = "An error has occurred\n";
                 write(STDERR_FILENO, error_message, strlen(error_message));
                 exit(1);
@@ -182,18 +164,11 @@ void do_Fork(char *input[], int pathCount, char *_1_d_path[])
 
             if (redir > 0 && input[redir + 1] != NULL)
             {
-                // printf("Found redir request!\n");
                 close(STDOUT_FILENO);
                 open(input[redir + 1], O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
                 input[redir] = NULL;
             }
 
-            // test module
-            // for (int i = 0; input[i] != NULL; i++)
-            // {
-            //     printf("Input[%d]: %s\n", i, input[i]);
-            // }
-            // printf("Run: %s \n", apdPath[exeIndex]);
             execv(apdPath[exeIndex], input);
         }
     }
@@ -225,17 +200,6 @@ int main(int argc, char *argv[])
             printf("wish> ");
             char *input[argBuffer];
 
-            // printf("Hello World\n");
-            // char *test;
-            // test = strdup(" ls > ls>jiba   a  a  ");
-            // lineHandler(test, input);
-            // // test
-            // for (int i = 0; input[i] != NULL; i++)
-            // {
-            //     printf("Input[%d]: %s\n", i, input[i]);
-            // }
-            // printf("Len: %d\n", getLen(input));
-
             char *line = NULL;
             size_t len = 0;
             ssize_t nread;
@@ -245,7 +209,6 @@ int main(int argc, char *argv[])
             }
             int argCount = getLen(input);
 
-            // simple three
             if (argCount == 0)
                 continue;
             if (strcmp(input[0], "exit") == 0)
@@ -297,23 +260,8 @@ int main(int argc, char *argv[])
                 {
                     _1_D_path[i] = path[i];
                 }
-                // test module
-                //  printf("Pathcount = %d\n", pathCount);
-                //  for (int i = 0; i < pathCount + 1; i++)
-                //  {
-                //      printf("Path[%d]: %s", i, path[i]);
-                //  }
-                //  printf("Last one should be empty\n");
                 continue;
             }
-            // path test
-            //  if (strcmp(input[0], "printPath") == 0)
-            //  {
-            //      for (int i = 0; i < pathCount; i++)
-            //      {
-            //          printf("Path[%d]: %s\n", i, path[i]);
-            //      }
-            //  }
             if (strcmp(input[0], "loop") == 0)
             {
                 if (argCount < 3)
@@ -330,7 +278,6 @@ int main(int argc, char *argv[])
                     continue;
                 }
                 int loopIndicator = -1;
-                // printf("Input len: %d\n", argCount);
                 for (int i = 0; i < argCount; i++)
                 {
                     char *cmp;
@@ -340,7 +287,6 @@ int main(int argc, char *argv[])
                         loopIndicator = i;
                     }
                 }
-                // printf("Loop time: %d\n", loopCount);
 
                 // looping
                 for (int i = 0; i < loopCount; i++)
@@ -357,13 +303,6 @@ int main(int argc, char *argv[])
                     {
                         loopInput[loop - 2] = input[loop];
                     }
-
-                    // test
-                    // for (int j = 0; loopInput[j] != NULL; j++)
-                    // {
-                    //     printf("LoopInput[%d]: %s\n", j, loopInput[j]);
-                    // }
-                    // test end
 
                     if (loopIndicator != -1)
                     {
@@ -468,13 +407,6 @@ int main(int argc, char *argv[])
                     {
                         _1_D_path[i] = path[i];
                     }
-                    // test module
-                    //  printf("Pathcount = %d\n", pathCount);
-                    //  for (int i = 0; i < pathCount + 1; i++)
-                    //  {
-                    //      printf("Path[%d]: %s", i, path[i]);
-                    //  }
-                    //  printf("Last one should be empty\n");
                     continue;
                 }
                 if (strcmp(input[0], "loop") == 0)
@@ -489,7 +421,6 @@ int main(int argc, char *argv[])
                         }
                         continue;
                     }
-                    // printf("Into loop\n");
                     int loopCount = atoi(input[1]);
                     if (loopCount < 1)
                     {
@@ -502,7 +433,6 @@ int main(int argc, char *argv[])
                         continue;
                     }
                     int loopIndicator = -1;
-                    // printf("Input len: %d\n", argCount);
                     for (int i = 0; i < argCount; i++)
                     {
                         char *cmp;
@@ -512,7 +442,6 @@ int main(int argc, char *argv[])
                             loopIndicator = i;
                         }
                     }
-                    // printf("Loop time: %d\n", loopCount);
 
                     // looping
                     for (int i = 0; i < loopCount; i++)
@@ -528,13 +457,6 @@ int main(int argc, char *argv[])
                         {
                             loopInput[loop - 2] = input[loop];
                         }
-
-                        // test
-                        // for (int j = 0; loopInput[j] != NULL; j++)
-                        // {
-                        //     printf("LoopInput[%d]: %s\n", j, loopInput[j]);
-                        // }
-                        // test end
 
                         if (loopIndicator != -1)
                         {
